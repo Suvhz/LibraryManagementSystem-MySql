@@ -17,6 +17,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.suvha.libraryManagmentSystemMysql.exception.DataNotFoundException;
+import com.suvha.libraryManagmentSystemMysql.model.ErrorMessage;
 
 @ControllerAdvice
 public class GlobalExceptionHandler  extends ResponseEntityExceptionHandler {

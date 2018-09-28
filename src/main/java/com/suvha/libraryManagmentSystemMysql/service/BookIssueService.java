@@ -9,9 +9,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.suvha.libraryManagementSystem.exception.DataNotFoundException;
 import com.suvha.libraryManagmentSystemMysql.Repository.BookIssueRepository;
-import com.suvha.libraryManagmentSystemMysql.Repository.BookRepository;
+import com.suvha.libraryManagmentSystemMysql.exception.DataNotFoundException;
 import com.suvha.libraryManagmentSystemMysql.model.Book;
 import com.suvha.libraryManagmentSystemMysql.model.BookIssue;
 import com.suvha.libraryManagmentSystemMysql.model.User;

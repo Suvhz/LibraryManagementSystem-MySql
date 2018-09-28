@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.suvha.libraryManagmentSystemMysql.Repository.UserRepository;
+import com.suvha.libraryManagmentSystemMysql.exception.DataNotFoundException;
 import com.suvha.libraryManagmentSystemMysql.model.User;
 import com.suvha.libraryManagmentSystemMysql.serviceDAO.ServiceDAO;
 
