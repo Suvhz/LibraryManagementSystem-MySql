@@ -8,7 +8,6 @@ public interface ServiceDAO<T>{
 	public Map<String, String> delete(int id);
 	public void deleteAll();
 	public T update(T t);
-	public T getById(int id);
-	public List<T> get();
+	public T getById(long id);
 	public List<T> getAll();
 }
