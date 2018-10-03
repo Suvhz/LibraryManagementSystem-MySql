@@ -1,23 +1,35 @@
 package com.suvha.libraryManagmentSystemMysql.model;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import org.springframework.data.annotation.Id;
 
 @Entity
-public class Book {
+@Table(name = "book")
+public class Book implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
+	
 	@NotNull(message="Name cannot be null")
 	@NotBlank(message="Enter the name")
 	private String name;
-	@Min(value=1, message="Please enter quantity greater than 0")
-	private int quantity;
+	@Min(value=0, message="Please enter quantity greater than 0")
+	private int quantity=0;
 	@NotNull(message="location cannot be null")
 	@NotBlank(message="Enter the location")
 	private String location;
@@ -33,12 +45,12 @@ public class Book {
 	@NotNull(message="Author cannot be null")
 	@NotBlank(message="Enter the author")
 	private String author;
-	private String userId;
-	
+	@OneToMany(mappedBy="book", orphanRemoval=true)
+	private List<BookIssue> bookIssue = new ArrayList<>();
 	public Book(){
 		
 	}
-	public Book(long id,  String name, int quantity, String location, String description,String isbn,String publisher, String author, String userId) {
+	public Book(long id,  String name, int quantity, String location, String description,String isbn,String publisher, String author) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -48,7 +60,6 @@ public class Book {
 		this.isbn = isbn;
 		this.publisher = publisher;
 		this.author = author;
-		this.userId = userId;
 	}
 	public long getId() {
 		return id;
@@ -97,12 +108,6 @@ public class Book {
 	}
 	public void setAuthor(String author) {
 		this.author = author;
-	}
-	public String getUserId() {
-		return userId;
-	}
-	public void setUserId(String userId) {
-		this.userId = userId;
 	}
 	
 	

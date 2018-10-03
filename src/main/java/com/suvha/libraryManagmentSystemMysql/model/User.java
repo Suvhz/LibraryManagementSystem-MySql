@@ -1,20 +1,31 @@
 package com.suvha.libraryManagmentSystemMysql.model;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import org.springframework.data.annotation.Id;
+import com.suvha.libraryManagmentSystemMysql.validation.ValidPassword;
 
-import lombok.Data;
 @Entity
-@Data
-public class User {
+@Table(name = "user")
+public class User implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id")
 	public long id;
 	@NotNull(message="First name cannot be null")
 	@NotBlank(message="Enter first name")
@@ -25,7 +36,10 @@ public class User {
 	@Email(message="Enter email")
 	private String email;
 	@NotNull
+	@ValidPassword
 	private String password;
+	@OneToMany(mappedBy="user", orphanRemoval=true)
+	private List<BookIssue> bookIssue = new ArrayList<>();
 	public User() {
 		
 	}

@@ -19,29 +19,30 @@ import com.suvha.libraryManagmentSystemMysql.serviceDAO.ServiceDAO;
 @Service
 public class BookIssueService implements ServiceDAO<BookIssue>{
 	
-	@Autowired
+	@Autowired(required=true)
 	private BookIssueRepository bookIssueRepository;
-	@Autowired
+	@Autowired(required=true)
 	private BookService bookService;
-	@Autowired
+	@Autowired(required=true)
 	private UserService userService;
-	@Override
 	
+	@Override
 	public BookIssue create(BookIssue t) {
-		Book book = bookService.getById(t.getBookId());
-		User user = userService.getById(t.getUserId());
+		Book book = bookService.getById(t.getBook().getId());
+		User user = userService.getById(t.getUser().getId());
 		int quantity = book.getQuantity();
 		if (user != null) {
 			if (quantity > 0) {
-				book.setQuantity(quantity - 1);
-				bookService.update(book);
 				t.setStatus(false);
+				t.setUser(user);
 				Date date = new Date();
 				t.setIssueDate(date);
+				book.setQuantity(quantity--);
+				bookService.update(book);
 				return bookIssueRepository.save(t);
 			}
 		}
-		throw new DataNotFoundException("Book with id " + t.getBookId() + " not found");
+		throw new DataNotFoundException("Book with id " + t.getBook() + " not found");
 	}
 
 	@Override
@@ -60,9 +61,13 @@ public class BookIssueService implements ServiceDAO<BookIssue>{
 	@Override
 	public BookIssue update(BookIssue t) {
 		BookIssue bookIssue = getById(t.getId());
-		bookIssue.setBookId(t.getBookId());
-		bookIssue.setUserId(t.getUserId());
+		Book book = bookService.getById(bookIssue.getId());
+		bookIssue.setBook(t.getBook());
 		bookIssue.setStatus(t.isStatus());
+		Date date = new Date();
+		bookIssue.setDueDate(date);
+		book.setQuantity(book.getQuantity()+1);
+		bookService.update(book);
 		return bookIssueRepository.save(bookIssue);
 	}
 

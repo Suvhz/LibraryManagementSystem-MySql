@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.suvha.libraryManagmentSystemMysql.Repository.UserRepository;
@@ -14,12 +15,12 @@ import com.suvha.libraryManagmentSystemMysql.serviceDAO.ServiceDAO;
 
 @Service
 public class UserService implements ServiceDAO<User>{
-	
+	@Autowired
 	private UserRepository userRepository;
 
 	@Override
 	public User create(User t) {
-		return userRepository.save(t);
+			return userRepository.save(t);
 	}
 
 	@Override

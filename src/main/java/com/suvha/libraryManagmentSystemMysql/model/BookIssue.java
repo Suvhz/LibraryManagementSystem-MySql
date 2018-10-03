@@ -1,31 +1,37 @@
 package com.suvha.libraryManagmentSystemMysql.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-
-import org.springframework.data.annotation.Id;
-
-import lombok.Data;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 @Entity
-@Data
-public class BookIssue {
+@Table(name = "book_issue")
+public class BookIssue implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
-	private long userId;
-	private long bookId;
+	@ManyToOne()
+	@JoinColumn(name="user_id")
+	private User user;
+	@ManyToOne
+	@JoinColumn(name="book_id")
+	private Book book;
 	private boolean status;
 	private Date issueDate;
+	private Date dueDate;
 	
 	public BookIssue() {}
-	
-	public BookIssue(long userId, long bookId) {
-		this.userId = userId;
-		this.bookId = bookId;
-	}
+
 
 	public long getId() {
 		return id;
@@ -35,20 +41,20 @@ public class BookIssue {
 		this.id = id;
 	}
 
-	public long getUserId() {
-		return userId;
+	public User getUser() {
+		return user;
 	}
 
-	public void setUserId(long userId) {
-		this.userId = userId;
+	public void setUser(User userId) {
+		this.user = userId;
 	}
 
-	public long getBookId() {
-		return bookId;
+	public Book getBook() {
+		return book;
 	}
 
-	public void setBookId(long bookId) {
-		this.bookId = bookId;
+	public void setBook(Book bookId) {
+		this.book = bookId;
 	}
 
 	public boolean isStatus() {
@@ -65,6 +71,16 @@ public class BookIssue {
 
 	public void setIssueDate(Date issueDate) {
 		this.issueDate = issueDate;
+	}
+
+
+	public Date getDueDate() {
+		return dueDate;
+	}
+
+
+	public void setDueDate(Date dueDate) {
+		this.dueDate = dueDate;
 	}
 	
 	

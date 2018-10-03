@@ -1,16 +1,17 @@
 package com.suvha.libraryManagmentSystemMysql.model;
 
 import java.util.Date;
+import java.util.Map;
 
 public class ErrorMessage {
 	private Date timestamp;
 	private String errorMessage;
-	private String detail;
+	private Map<String, String> detail;
 	
 	public ErrorMessage() {
 		
 	}
-	public ErrorMessage(Date timestamp, String errorMessage, String detail) {
+	public ErrorMessage(Date timestamp, String errorMessage, Map<String, String>  detail) {
 		super();
 		this.timestamp = timestamp;
 		this.errorMessage = errorMessage;
@@ -33,11 +34,11 @@ public class ErrorMessage {
 		this.errorMessage = errorMessage;
 	}
 
-	public String getDetail() {
+	public Map<String, String>  getDetail() {
 		return detail;
 	}
 
-	public void setDetail(String requestedURL) {
+	public void setDetail(Map<String, String>  requestedURL) {
 		this.detail = requestedURL;
 	}
 	

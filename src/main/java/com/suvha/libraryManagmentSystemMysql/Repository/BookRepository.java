@@ -12,5 +12,4 @@ public interface BookRepository  extends JpaRepository<Book, Long>{
 	public Book findByName(String name);
 	public Optional<Book> findById(long id);
 	public List<Book> findByQuantityGreaterThan(int quantity);
-
 }

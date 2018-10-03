@@ -6,12 +6,13 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.suvha.libraryManagmentSystemMysql.Repository.BookRepository;
 import com.suvha.libraryManagmentSystemMysql.exception.DataNotFoundException;
 import com.suvha.libraryManagmentSystemMysql.model.Book;
 import com.suvha.libraryManagmentSystemMysql.serviceDAO.ServiceDAO;
-
+@Service
 public class BookService implements ServiceDAO<Book>{
 	
 	@Autowired
