@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,14 +13,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.suvha.libraryManagmentSystemMysql.model.Book;
 import com.suvha.libraryManagmentSystemMysql.service.BookService;
 
 @RestController
+@RequestMapping(BookController.BASE_URL)
 public class BookController {
 	public static final String BASE_URL = "/api/V1/book";
 
@@ -57,20 +57,30 @@ public class BookController {
 
 	@PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public Book update(@RequestBody Book book) {
+	public Book update(@Valid @RequestBody Book book) {
 		return bookService.update(book);
 	}
 
 	@GetMapping(value = "/name/{bookName}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public Book getByName(@PathVariable String bookName) {
-		return bookService.getByBookName(bookName);
+		if(bookName != null && !bookName.trim().isEmpty()){		
+			return bookService.getByBookName(bookName);
+		}
+		return null;
 	}
 
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public Book getByid(@PathVariable int id) {
 		return bookService.getById(id);
+	}
+	@GetMapping(value = "/isbn/{isbn}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public Book getByIsbn(@PathVariable String isbn) {
+				
+			return bookService.getByIsbn(isbn);
+		
 	}
 
 }

@@ -9,7 +9,8 @@ import org.springframework.stereotype.Repository;
 import com.suvha.libraryManagmentSystemMysql.model.Book;
 @Repository
 public interface BookRepository  extends JpaRepository<Book, Long>{
-	public Book findByName(String name);
+	public Optional<Book> findByName(String name);
 	public Optional<Book> findById(long id);
+	public Optional<Book> findByIsbn(String name);
 	public List<Book> findByQuantityGreaterThan(int quantity);
 }

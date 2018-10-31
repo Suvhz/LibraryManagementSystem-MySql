@@ -22,9 +22,9 @@ public class BookIssueService implements ServiceDAO<BookIssue>{
 	@Autowired(required=true)
 	private BookIssueRepository bookIssueRepository;
 	@Autowired(required=true)
-	private BookService bookService;
-	@Autowired(required=true)
 	private UserService userService;
+	@Autowired
+	private BookService bookService;
 	
 	@Override
 	public BookIssue create(BookIssue t) {
@@ -61,12 +61,21 @@ public class BookIssueService implements ServiceDAO<BookIssue>{
 	@Override
 	public BookIssue update(BookIssue t) {
 		BookIssue bookIssue = getById(t.getId());
-		Book book = bookService.getById(bookIssue.getId());
-		bookIssue.setBook(t.getBook());
-		bookIssue.setStatus(t.isStatus());
+		Book book = bookService.getById(t.getBook().getId());
+		User user = userService.getById(t.getUser().getId());
+		bookIssue.setUser(user);
+		bookIssue.setBook(book);
+		if(t.isStatus()!=bookIssue.isStatus()) {
+			bookIssue.setStatus(t.isStatus());
+			if(t.isStatus()==true) {
+			book.setQuantity(book.getQuantity()+1);
+			}else {
+				book.setQuantity(book.getQuantity()-1);
+			}
+		}
 		Date date = new Date();
 		bookIssue.setDueDate(date);
-		book.setQuantity(book.getQuantity()+1);
+		
 		bookService.update(book);
 		return bookIssueRepository.save(bookIssue);
 	}

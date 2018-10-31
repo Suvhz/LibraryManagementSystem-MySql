@@ -65,11 +65,18 @@ public class BookService implements ServiceDAO<Book>{
 		return bookRepository.findByQuantityGreaterThan(0);
 	}
 	public Book getByBookName(String bookName) {
-		Book book = bookRepository.findByName(bookName);
-		if (book != null) {
-			return book;
+		Optional<Book> book = bookRepository.findByName(bookName);
+		if (book.isPresent()) {
+			return book.get();
 		}
 		throw new DataNotFoundException("Book with name " + bookName + " not found");
+	}
+	public Book getByIsbn(String isbn) {
+		Optional<Book> book = bookRepository.findByIsbn(isbn);
+		if (book.isPresent()) {
+			return book.get();
+		}
+		throw new DataNotFoundException("No book found with ISBN "+isbn);
 	}
 
 }
