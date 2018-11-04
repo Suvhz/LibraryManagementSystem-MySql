@@ -34,6 +34,7 @@ public class User implements Serializable{
 	@NotBlank(message="Enter last name") 
 	private String lastName;
 	@Email(message="Enter email")
+	@NotBlank(message="Enter your email")
 	private String email;
 	@NotNull
 	@ValidPassword
